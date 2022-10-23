@@ -1,6 +1,6 @@
-#define COMPONENT main
-#define COMPONENT_BEAUTIFIED Neurotrauma - Main
-#include "script_mod.hpp"
+#define COMPONENT medical_engine
+#define COMPONENT_BEAUTIFIED Neurotrauma - Medical_engine
+#include "\x\neuro\addons\main\script_mod.hpp"
 
 // #define DEBUG_MODE_FULL
 // #define DISABLE_COMPILE_CACHE
@@ -14,4 +14,4 @@
     #define DEBUG_SETTINGS DEBUG_SETTINGS_MAIN
 #endif
 
-#include "script_macros.hpp"
+#include "\x\neuro\addons\main\script_macros.hpp"
