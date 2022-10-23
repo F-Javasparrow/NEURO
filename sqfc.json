@@ -1,0 +1,13 @@
+{
+    "inputDirs": [
+        "P:/x/acas/addons/"
+    ],
+    "includePaths": [
+        "P:/"
+    ],
+    "excludeList": [
+        "xeh_prep.sqf"
+    ],
+    "outputDir": "P:/",
+    "workerThreads": 12
+}

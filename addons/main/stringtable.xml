@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="neuro">
+    <Package name="main">
+        <Key ID="STR_neuro_main_URL">
+            <English>https://github.com/F-Javasparrow/Neurotrauma</English>
+        </Key>
+    </Package>
+</Project>
