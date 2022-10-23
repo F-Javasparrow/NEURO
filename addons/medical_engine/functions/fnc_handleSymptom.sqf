@@ -31,18 +31,35 @@ if (!local _unit) then {
 		];
 
 		private _type = _changeValue get "TYPE";
-		private _changeHR = random (_changeValue get "HR");
-		private _changeRR = random (_changeValue get "RR");
-		private _changePain = random (_changeValue get "PAIN");
-		private _changeSPo2 = random (_changeValue get "SPO2");
+		private _changeHR = _changeValue get "HR";
+		private _changeRR = _changeValue get "RR";
+		private _changePain = _changeValue get "PAIN";
+		private _changeSpo2 = _changeValue get "SPO2";
+
+		private _unitHR = GETHR(_unit);
+		private _unitRR = GETRR(_unit);
+		private _unitPain = GETPAIN(_unit);
+		private _unitSpo2 = GETSPO2(_unit);
+		SETHR(_unit,(0 max (_unitHR+_changeHR)));
+		SETHR(_unit,(0 max (_unitRR+_changeRR)));
+		SETHR(_unit,(0 max (_unitPain+_changePain)));
+		SETHR(_unit,(0 max (_unitSpo2+_changeSpo2)));
 
 		switch(_type) do {
 			case"Wound": {
-				private _mutilate = _changeValue get "MUTILATE";
+				
 			};
 			case"Symptom": {
 
 			};
 		};
+
+		private _symptomData = [_unit, _hitPart, _severity];
+		{
+			_returnValue = _symptomData call _x;
+
+			if (toLower _returnValue isEqualType "exit") exitWith {};
+		} forEach _symptomHandlers;
+		
 	}forEach _symptomInfo;
 }, 1, [_unit]] call CBA_fnc_addPerFrameHandler;

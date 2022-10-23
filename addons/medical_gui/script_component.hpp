@@ -1,7 +1,7 @@
-#define COMPONENT medical_engine
-#define COMPONENT_BEAUTIFIED Neurotrauma - Medical_engine
+#define COMPONENT medical_gui
+#define COMPONENT_BEAUTIFIED Neurotrauma - Medical_gui
 #include "\x\neuro\addons\main\script_mod.hpp"
-#include "Neuro_Medical_Marcos.hpp"
+#include "\x\neuro\addons\medical_engine\Neuro_Medical_Marcos.hpp"
 
 // #define DEBUG_MODE_FULL
 // #define DISABLE_COMPILE_CACHE
