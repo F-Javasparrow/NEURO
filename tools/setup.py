@@ -13,17 +13,17 @@ import winreg
 
 ######## GLOBALS #########
 MAINDIR = "x"
-PROJECTDIR = "acas"
+PROJECTDIR = "neuro"
 ##########################
 
 def main():
     FULLDIR = "{}\\{}".format(MAINDIR,PROJECTDIR)
     print("""
   #################################################
-  # ACAS Development Environment Setup            #
+  # Neurotrauma Development Environment Setup     #
   #################################################
 
-  This script will create your ACAS dev environment for you.
+  This script will create your Neurotrauma dev environment for you.
 
   Before you run this, you should already have:
     - The Arma 3 Tools installed properly via Steam
@@ -31,9 +31,9 @@ def main():
 
   If you have not done those things yet, please abort this script in the next step and do so first.
 
-  This script will create two hard links on your system, both pointing to your ACAS project folder:
-    [Arma 3 installation directory]\\{} => ACAS project folder
-    P:\\{}                              => ACAS project folder
+  This script will create two hard links on your system, both pointing to your Neurotrauma project folder:
+    [Arma 3 installation directory]\\{} => Neurotrauma project folder
+    P:\\{}                              => Neurotrauma project folder
     """.format(FULLDIR,FULLDIR))
     print("\n")
 

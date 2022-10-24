@@ -3,7 +3,7 @@ prefix = "neuro"
 author = "Javasparrow"
 
 sig_version = 3
-version = "0.1.0"
+version = "0.1.3"
 reuse_private_key = false
 files = [
     "mod.cpp",

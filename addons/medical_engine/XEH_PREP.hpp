@@ -1,0 +1,10 @@
+PREP(addSymptom);
+PREP(getTypeOfSymptoms);
+PREP(handleDamage);
+PREP(handleMedicalStatus);
+PREP(handleSymptom);
+PREP(parseConfigForSymptoms);
+PREP(parseHandlersCfg);
+PREP(removeSymptom);
+PREP(symptomHandlerBase);
+PREP(woundReceived);

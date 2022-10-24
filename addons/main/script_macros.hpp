@@ -2,6 +2,10 @@
 #include "\x\cba\addons\xeh\script_xeh.hpp"
 
 #define DFUNC(var1) TRIPLES(ADDON,fnc,var1)
+
+#define LINKFUNC(var1) {_this call FUNC(var1)}
+#define LINKEFUNC(var1,var2) {_this call EFUNC(var1,var2)}
+
 #ifdef DISABLE_COMPILE_CACHE
   #undef PREP
   #define PREP(fncName) DFUNC(fncName) = compile preprocessFileLineNumbers QPATHTOF(functions\DOUBLES(fnc,fncName).sqf)

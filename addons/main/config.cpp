@@ -7,8 +7,7 @@ class CfgPatches {
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {
-            "cba_main",
-            "ace_main"
+            "cba_main"
         };
         author = "Javasparrow";
         url = CSTRING(URL);
