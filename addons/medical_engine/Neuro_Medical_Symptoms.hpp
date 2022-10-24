@@ -18,7 +18,8 @@ class Neuro_Medical_Symptoms {
 			changeSPo2 = [0,0,0];
 		};
 	};
-
+// 症状
+	// 血液
 	class Bleeding: SysmptomBase {
 		visableLevel = 0;
 		visableValue = [10,100];
@@ -33,6 +34,34 @@ class Neuro_Medical_Symptoms {
 		reduceSymptom = [];
 	};
 
+	// 头部
+
+	// 肺部
+
+	// 心脏
+	class CardiacArrest: SysmptomBase {
+		visableLevel = 1;
+		visableValue = [0,100];
+		class details {
+			type = "Sysmptom"
+			changeHR = [-100,-150,-500];
+			changeRR = [0,0,0];
+			changePain = [0,0,0];
+			changeSPo2 = [0,0,0];
+		};
+		causeSymptom = [];
+		reduceSymptom = [];
+	};
+
+	// 躯干
+
+	// 四肢
+
+	// 骨骼
+
+	// 其他
+
+// 伤口
 	class WoundBase: SysmptomBase {
 		visableLevel = 0;
 		class details {

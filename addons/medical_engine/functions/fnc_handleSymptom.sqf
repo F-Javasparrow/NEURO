@@ -33,16 +33,13 @@ if (!local _unit) then {
 		private _type = _changeValue get "TYPE";
 		private _changeHR = _changeValue get "HR";
 		private _changeRR = _changeValue get "RR";
-		private _changePain = _changeValue get "PAIN";
 		private _changeSpo2 = _changeValue get "SPO2";
 
 		private _unitHR = GETHR(_unit);
 		private _unitRR = GETRR(_unit);
-		private _unitPain = GETPAIN(_unit);
 		private _unitSpo2 = GETSPO2(_unit);
 		SETHR(_unit,(0 max (_unitHR+_changeHR)));
 		SETHR(_unit,(0 max (_unitRR+_changeRR)));
-		SETHR(_unit,(0 max (_unitPain+_changePain)));
 		SETHR(_unit,(0 max (_unitSpo2+_changeSpo2)));
 
 		switch(_type) do {

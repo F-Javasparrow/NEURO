@@ -32,7 +32,6 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
     
     _changeValue set ["HR", GET_ARRAY(_entry >> "details" >> "changeHR",[ARR_3(0,0,0)])];
     _changeValue set ["RR", GET_ARRAY(_entry >> "details" >> "changeRR",[ARR_3(0,0,0)])];
-    _changeValue set ["PAIN", GET_ARRAY(_entry >> "details" >> "changePain",[ARR_3(0,0,0)])];
     _changeValue set ["SPO2", GET_ARRAY(_entry >> "details" >> "changeSPo2",[ARR_3(0,0,0)])];
 
     // -------------------------------------------------------------------------------- //
