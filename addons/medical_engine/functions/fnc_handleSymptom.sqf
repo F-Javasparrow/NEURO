@@ -22,7 +22,7 @@ if (!local _unit) then {
 		_x params ["_symptomClass", "_hitPart", "_severity"];
 		_hitPart params ["_mainPart", "_subPart"];
 
-		GVAR(symptomsDetails) get _symptomClass params [
+		EGVAR(meidical,symptomsDetails) get _symptomClass params [
 			"_selections",
 			"_visableLevel", "_visableValue",
 			"_causeSymptom", "_reduceSymptom",

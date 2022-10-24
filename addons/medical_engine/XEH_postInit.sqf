@@ -1,5 +1,10 @@
 #include "script_component.hpp"
 
+call FUNC(parseConfigForSymptoms);
+addMissionEventHandler ["Loaded",{
+    call FUNC(parseConfigForSymptoms);
+}];
+
 ["CAManBase", "init", {
     params ["_unit"];
 
@@ -18,10 +23,8 @@
     };
 }, nil, [], true] call CBA_fnc_addClassEventHandler;
 
-/* 
 [QEGVAR(medical,woundReceived), {
     params ["_unit", "_damages", "_ammo"];
 
     systemChat str _this;
 }] call CBA_fnc_addEventHandler;
-*/

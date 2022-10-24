@@ -8,7 +8,7 @@ switch(toLower _type) do {
 		_symptomClass = _data;
 		if(isNil "_data2") then {_allSymptom = false} else {_allSymptom = _data2};
 		
-		while(true) do {
+		while{true} do {
 			_index = _symptomInfo find _data;
 			_symptomInfo deleteAt _index;
 

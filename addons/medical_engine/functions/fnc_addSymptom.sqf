@@ -5,7 +5,7 @@ _severityInfo params ["_adjustType", "_severity"];
 
 private _symptomInfo = _unit getVariable [QEGVAR(medical,symptomInfo),[]];
 
-_symptomIndex = _symptomInfo findIf {_x # 0 == _symptomClass && _x # 1 == _hitPartInfo};
+_symptomIndex = _symptomInfo findIf {_x # 0 isEqualTo _symptomClass && _x # 1 isEqualTo _hitPartInfo};
 
 if(_symptomIndex != -1) then {
 	_oldSeverity = _symptomInfo # _symptomIndex # 2;

@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 params ["_typeOfProjectile"];
 
-private _typeOfSymptoms = GVAR(SymptomsTypeCache) get _typeOfProjectile;
+private _typeOfSymptoms = EGVAR(meidical,symptomTypeCache) get _typeOfProjectile;
 
 if (isNil "_typeOfSymptoms") then {
     if (isText (configFile >> "CfgAmmo" >> _typeOfProjectile >> "Neuro_SymptomsType")) then {
@@ -11,11 +11,11 @@ if (isNil "_typeOfSymptoms") then {
     };
 
     // config may define an invalid damage type
-    if !(_typeOfSymptoms in GVAR(symptomsDetails)) then {
+    if !(_typeOfSymptoms in EGVAR(meidical,symptomsDetails)) then {
         _typeOfSymptoms = [["unknown", 0]];
     };
 
-    GVAR(SymptomsTypeCache) set [_typeOfProjectile, _typeOfSymptoms];
+    EGVAR(meidical,symptomTypeCache) set [_typeOfProjectile, _typeOfSymptoms];
 };
 
 _typeOfSymptoms // return

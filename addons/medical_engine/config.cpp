@@ -18,3 +18,6 @@ class CfgPatches {
 #include "CfgEventHandlers.hpp"
 #include "CfgFunctions.hpp"
 #include "CfgVehicles.hpp"
+
+#include "Neuro_Medical_Symptoms.hpp"
+#include "Neuro_Medical_Wounds.hpp"
