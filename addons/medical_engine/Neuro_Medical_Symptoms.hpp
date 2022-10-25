@@ -57,6 +57,22 @@ class Neuro_Medical_Symptoms {
 	};
 
 	// 肺部
+	class Pneumothorax: SysmptomBase {
+		visableLevel = 1.5;
+		visableValue = [0.75,1];
+		class details {
+			displayName = "气胸 ";
+			displayDesc = "气胸会阻止低血氧的降低 虽然气胸本身并不致命.但如果与导致低氧血症的病症搭配 气胸很容易致死 气胸的负面作用可以通过使用气胸针暂时抵消";
+			type = "Sysmptom";
+			changeHR = [0,0,0];
+			changeRR = [0,0,0];
+			changePain = [0,0,0];
+			changeSPo2 = [0,0,0];
+		};
+		causeSymptom = [];
+		reduceSymptom = [];
+	};
+		
 
 	// 心脏
 	class CardiacArrest: SysmptomBase {
