@@ -23,6 +23,7 @@ if (!local _unit) then {
 		_hitPart params ["_mainPart", "_subPart"];
 
 		EGVAR(meidical,symptomsDetails) get _symptomClass params [
+			"", "",
 			"_selections",
 			"_visableLevel", "_visableValue",
 			"_causeSymptom_Hash", "_reduceSymptom_Hash",

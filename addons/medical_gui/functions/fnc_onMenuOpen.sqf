@@ -1,73 +1,98 @@
 #include "script_component.hpp"
-/*
- * Author: Glowbal, mharis001
- * Handles opening the Medical Menu. Called from onLoad event.
- *
- * Arguments:
- * 0: Medical Menu display <DISPLAY>
- *
- * Return Value:
- * None
- *
- * Example:
- * [DISPLAY] call ace_medical_gui_fnc_onMenuOpen
- *
- * Public: No
- */
-
 params ["_display"];
 
-// Create background effects based on interact menu setting
-if (EGVAR(interact_menu,menuBackground) == 1) then {[QGVAR(id), true] call EFUNC(common,blurScreen)};
-if (EGVAR(interact_menu,menuBackground) == 2) then {0 cutRsc [QEGVAR(interact_menu,menuBackground), "PLAIN", 1, false]};
+hint "opened Menu";
 
-// Fix mouse moving randomly
 [{
     [{setMousePosition _this}, _this] call CBA_fnc_execNextFrame;
 }, getMousePosition] call CBA_fnc_execNextFrame;
 
-// Set target name as title
-private _ctrlTitle = _display displayCtrl IDC_TITLE;
-_ctrlTitle ctrlSetText ([GVAR(target)] call EFUNC(common,getName));
-
-// Initially hide the triage select buttons
-[_display] call FUNC(toggleTriageSelect);
-
-// Store display and add PFH to update it
 uiNamespace setVariable [QGVAR(menuDisplay), _display];
-["ace_medicalMenuOpened", [ACE_player, GVAR(target), _display]] call CBA_fnc_localEvent;
+["neuro_medicalMenuOpened", [(call CBA_fnc_currentUnit), GVAR(target), _display]] call CBA_fnc_localEvent;
 
-if (GVAR(menuPFH) != -1) exitWith {
-    TRACE_1("Menu PFH already running",GVAR(menuPFH));
-};
+if (GVAR(menuPFH) != -1) exitWith {};
 
-GVAR(menuPFH) = [FUNC(menuPFH), 0, []] call CBA_fnc_addPerFrameHandler;
+GVAR(menuPFH) = [{
 
-// Hide categories if they don't have any actions (airway)
-private _list = [
-    [IDC_TRIAGE, true],
-    [IDC_EXAMINE, true],
-    [IDC_BANDAGE, "bandage"],
-    [IDC_MEDICATION, "medication"],
-    [IDC_AIRWAY, "airway"],
-    [IDC_ADVANCED, "advanced"],
-    [IDC_DRAG, "drag"],
-    [IDC_TOGGLE, true]
-];
-private _countEnabled = {
-    _x params ["", "_category"];
-    if (_category isEqualType "") then { _x set [1, (GVAR(actions) findIf {_category == _x select 1}) > -1]; };
-    _x select 1
-} count _list;
-private _offsetX = POS_X(1.5) + 0.5 * (POS_X(12) - POS_X(_countEnabled * 1.5));
-{
-    _x params ["_idc", "_enabled"];
-    private _ctrl = _display displayCtrl _idc;
-    if (_enabled) then {
-        _ctrl ctrlSetPositionX _offsetX;
-        _ctrl ctrlCommit 0;
-        _offsetX = _offsetX + POS_W(1.5);
-    } else {
+    private _display = uiNamespace getVariable [QGVAR(menuDisplay), displayNull];
+    if (isNull _display) exitWith {};
+
+    private _selectedCategory = lbCurSel IDC_Category;
+    systemChat str[_selectedCategory];
+    
+    // ------------------------------------------------------------------ //
+    {
+        private _ctrl = _display displayCtrl _x;
+        _ctrl ctrlRemoveAllEventHandlers "ButtonClick";
         _ctrl ctrlShow false;
+    } forEach IDCS_ACTION_BUTTONS;
+
+    private _idcIndex = 0;
+    {
+        _x params ["_displayName", "_category", "_condition", "_statement"];
+
+        if (_category == _selectedCategory && {call _condition}) then {
+            private _ctrl = _display displayCtrl (IDCS_ACTION_BUTTONS select _idcIndex);
+            _ctrl ctrlSetText _displayName;
+            _ctrl ctrlShow true;
+
+            _ctrl ctrlAddEventHandler ["ButtonClick", _statement];
+            _ctrl ctrlAddEventHandler ["ButtonClick", {GVAR(pendingReopen) = true}];
+
+            _idcIndex = _idcIndex + 1;
+        };
+    } forEach GVAR(actions);
+
+    // ------------------------------------------------------------------ //
+    private _ctrlSyptoms = _display displayCtrl IDC_SYPTOMS;
+
+    private _selectedMainPart = GVAR(Inedx2MainPart) get _selectedCategory;
+    private _symptomInfo = GVAR(target) getVariable [QEGVAR(medical,symptomInfo),[]];
+    
+    private _mainPartName = [//--- ToDo: Localize;
+        "头部",
+        "躯干",
+        "腹部",
+        "左手",
+        "右手",
+        "左腿",
+        "右腿"
+    ] select _selectedCategory;
+    _entries pushBack [_mainPartName, [1, 1, 1, 1]];
+
+    {
+        _x params ["_symptomClass", "_hitPartInfo", "_severity"];
+        _hitPartInfo params ["_mainHitPart", "_subHitPart"];
+
+        EGVAR(meidical,symptomsDetails) get _symptomClass params [
+            "_displayName", "_displayDesc",
+			"_selections",
+			"_visableLevel", "_visableValue",
+			"", "",
+			"",
+			""
+		];
+
+        if(_severity >= _visableValue#0 && _severity <= _visableValue#1 && _mainHitPart == _selectedMainPart) then {
+            _symptomEntries pushBack [format ["%1", _displayName], [1, 1, 1, 1]];
+        };
+    }forEach _symptomInfo;
+
+    if (_symptomEntries isEqualTo []) then {
+        _entries pushBack ["无症状", [1, 1, 1, 1]];
+    } else {
+        _entries append _symptomEntries;
     };
-} forEach _list;
+
+    lbClear _ctrlSyptoms;
+    {
+        _x params ["_text", "_color"];
+
+        _ctrlSyptoms lbSetColor [_ctrlSyptoms lbAdd _text, _color];
+    } forEach _entries;
+
+    _ctrlSyptoms lbSetCurSel -1;
+
+    // ------------------------------------------------------------------ //
+
+}, 0, []] call CBA_fnc_addPerFrameHandler;

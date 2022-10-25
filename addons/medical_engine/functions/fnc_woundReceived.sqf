@@ -11,7 +11,7 @@ if !(_typeOfSymptoms in EGVAR(meidical,symptomsDetails)) then {
 
 {
     _x params ["_syptomsClass", "_severityCoef"];
-    EGVAR(meidical,symptomsDetails) get _syptomsClass params ["_selections"];
+    EGVAR(meidical,symptomsDetails) get _syptomsClass params ["", "", "_selections"];
 
     {
         _x params ["_damage", "_hitPart"];

@@ -1,8 +1,10 @@
 #include "script_component.hpp"
 
 if (!hasInterface) exitWith {};
-GVAR(selectedMainPart) = 0;
 
+[] call FUNC(collectActions);
+
+GVAR(selectedMainPart) = 0;
 GVAR(menuPFH) = -1;
 
 ["Neuro medical", QGVAR(openMedicalMenuKey), "打开医疗菜单", {
@@ -11,7 +13,7 @@ GVAR(menuPFH) = -1;
         _target = cursorObject;
         if !(_target isKindOf "CAManBase" && {[(call CBA_fnc_currentUnit), _target] call FUNC(canOpenMenu)}) then {
             private _start = AGLToASL positionCameraToWorld [0, 0, 0];
-            private _end = AGLToASL positionCameraToWorld [0, 0, GVAR(maxDistance)];
+            private _end = AGLToASL positionCameraToWorld [0, 0, 3/* GVAR(maxDistance) */];
             private _intersections = lineIntersectsSurfaces [_start, _end, (call CBA_fnc_currentUnit), objNull, true, -1, "FIRE"];
             {
                 _x params ["", "", "_intersectObject"];
@@ -38,8 +40,3 @@ GVAR(menuPFH) = -1;
     };
     false
 }, [DIK_H, [false, false, false]], false, 0] call CBA_fnc_addKeybind;
-
-
-[GVAR(interactMenuClosed), {
-    QGVAR(RscPatientInfo) cutFadeOut 0.3;
-}] call CBA_fnc_addEventHandler;

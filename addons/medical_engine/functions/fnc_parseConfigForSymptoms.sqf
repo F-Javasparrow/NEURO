@@ -16,6 +16,8 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
     EGVAR(meidical,symptomsDetails) set ["#"+_className, _className];
 
     // -------------------------------------------------------------------------------- //
+    private _displayName = GET_STRING(_entry >> "displayName","Null Name");
+    private _displayDesc = GET_STRING(_entry >> "displayDesc","Null Desc");
 
     private _selections = GET_ARRAY(_entry >> "selections",ALL_MAINBODYPART);
     private _visableLevel = GET_NUMBER(_entry >> "visableLevel",0);
@@ -49,7 +51,7 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
 
     // -------------------------------------------------------------------------------- //
 
-    private _details = [_selections, _visableLevel, _visableValue, _causeSymptom, _reduceSymptom, _changeValue, _symptomHandlers];
+    private _details = [_displayName, _displayDesc, _selections, _visableLevel, _visableValue, _causeSymptom, _reduceSymptom, _changeValue, _symptomHandlers];
     EGVAR(meidical,symptomsDetails) set [_className, _details];
 
 } forEach configProperties [_symptomConfig, "isClass _x"];

@@ -16,5 +16,5 @@ class CfgPatches {
 };
 
 #include "CfgEventHandlers.hpp"
-
+#include "CfgUIGrids.hpp"
 #include "Neuro_Gui.hpp"
