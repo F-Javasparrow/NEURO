@@ -45,7 +45,9 @@ private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
 	_unitRR = 0 max (_changedValueList # 1);
 	_unitSpo2 = 0 max (_changedValueList # 2) min 100;
 	
-	if(_unitHR <= )
+	if(_unitHR <= 0) then {
+		
+	};
 
 	SETHR(_unit,_unitHR);
 	SETRR(_unit,_unitRR);

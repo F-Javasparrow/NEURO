@@ -35,6 +35,19 @@ class Neuro_Medical_Symptoms {
 	};
 
 	// 头部
+	class Coma: SysmptomBase {
+		visableLevel = 0;
+		visableValue = [0,100];
+		class details {
+			type = "Sysmptom"
+			changeHR = [0,0,0];
+			changeRR = [0,0,0];
+			changePain = [0,0,0];
+			changeSPo2 = [0,0,0];
+		};
+		causeSymptom = [["CardiacArrest", 0.40, "set", 1]];
+		reduceSymptom = [];
+	};
 
 	// 肺部
 
@@ -44,7 +57,7 @@ class Neuro_Medical_Symptoms {
 		visableValue = [0,100];
 		class details {
 			type = "Sysmptom"
-			changeHR = [-100,-150,-500];
+			changeHR = [0,0,0];
 			changeRR = [0,0,0];
 			changePain = [0,0,0];
 			changeSPo2 = [0,0,0];
@@ -74,7 +87,7 @@ class Neuro_Medical_Symptoms {
 		class details {
 			mutilate = 1;
 		};
-		causeSymptom = [[0.75, "Bleeding", 0.5]];
+		causeSymptom = [["Bleeding", 0.15, "add", 0.15]];
 		reduceSymptom = [];
 	};
 	class Wound_Internal: WoundBase {
@@ -89,7 +102,7 @@ class Neuro_Medical_Symptoms {
 		class details {
 			mutilate = 0.2;
 		};
-		causeSymptom = [[0.75, "Bleeding", 0.5]];
+		causeSymptom = [["Bleeding", 0.15, "add", 0.15]];
 		reduceSymptom = [];
 	};
 };
