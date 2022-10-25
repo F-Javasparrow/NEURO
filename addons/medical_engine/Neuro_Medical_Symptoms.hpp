@@ -40,6 +40,7 @@ class Neuro_Medical_Symptoms {
 
 	// 头部
 	class Coma: SysmptomBase {
+		selections = ["head"];
 		visableLevel = 0;
 		visableValue = [0,100];
 		class details {
@@ -75,10 +76,35 @@ class Neuro_Medical_Symptoms {
 	};
 
 	// 躯干
-
+	class InternalBleeding; SysmptomBase {
+	        visableLevel = 1;
+		visableValue = [0.2,1]；
+	        class details {
+			displayName = "内出血";
+			displayDesc = "内出血会迅速让病人失血，必须迅速处理";
+			type = "Sysmptom";
+			changeHR = [0,0,0];
+			changeRR = [0,0,0];
+			changePain = [0,0,0];
+			changeSPo2 = [0,0,0];
+		};
+		causeSymptom = [];
+		reduceSymptom = [];
+	};
+			
 	// 四肢
 
 	// 骨骼
+	class Fracture: SysmptomBase {
+		visableLevel = 0.5;
+		visableValue = [0,1];
+		class details {
+			displayName = "骨折";
+			displayDesc = "感觉有根骨头断了";
+			type = "Sysmptom";
+		};
+		causeSymptom = [["Bleeding", "_SAME_", 0.85, "add", 0.25]];
+	};
 
 	// 其他
 
