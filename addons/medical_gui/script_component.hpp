@@ -4,10 +4,10 @@
 
 #include "..\medical_engine\Neuro_Medical_Marcos.hpp"
 #include "..\medical_engine\Neuro_Medical_define.hpp"
-#include "defineResincl.inc"
-#include "defineDIKCodes.inc"
-#include "defineCommonGrids.inc"
-#include "defineCommonColors.inc"
+#include "\a3\ui_f\hpp\defineResincl.inc"
+#include "\a3\ui_f\hpp\defineDIKCodes.inc"
+#include "\a3\ui_f\hpp\defineCommonGrids.inc"
+#include "\a3\ui_f\hpp\defineCommonColors.inc"
 #include "Neuro_Gui_Define.hpp"
 
 // #define DEBUG_MODE_FULL
