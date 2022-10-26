@@ -59,10 +59,10 @@ class Neuro_Medical_Menu {
             w = 18.5 * GUI_GRID_W;
             h = 14.5 * GUI_GRID_H;
         };
-        class HRBackground: RscText
+        class MonitorBackground: RscText
         {
             idc = -1;
-            colorBackground[] = {1,1,1,1};
+            colorBackground[] = {0,0,0,1};
             x = 3.5 * GUI_GRID_W + GUI_GRID_CENTER_X;
             y = 1.5 * GUI_GRID_H + GUI_GRID_CENTER_Y;
             w = 18.5 * GUI_GRID_W;
@@ -71,6 +71,7 @@ class Neuro_Medical_Menu {
 
         class TitleText: RscText {
             idc = -1;
+            style = ST_TITLE
             text = "医疗菜单";
             x = -10.5 * GUI_GRID_W + GUI_GRID_CENTER_X;
             y = 0 * GUI_GRID_H + GUI_GRID_CENTER_Y;
@@ -231,7 +232,7 @@ class Neuro_Medical_Menu {
         };
 
         // 数据输出
-        class TreatmentHeader: RscText {
+        class TreatmentLog: RscText {
             idc = -1;
             style = ST_CENTER;
             text = "test";
@@ -241,19 +242,50 @@ class Neuro_Medical_Menu {
             h = 16 * GUI_GRID_H;
             colorText[] = {1, 1, 1, 0.9};
         };
-        class SymptomInfo: RscListBox {
+
+        class Symptoms: RscListBox {
             idc = IDC_SYPTOMS;
             x = 4 * GUI_GRID_W + GUI_GRID_CENTER_X;
             y = 6 * GUI_GRID_H + GUI_GRID_CENTER_Y;
-            w = 17.5 * GUI_GRID_W;
+            w = 13.5 * GUI_GRID_W;
             h = 14.5 * GUI_GRID_H;
-            sizeEx = POS_H(0.7);
             colorSelect[] = {1, 1, 1, 1};
             colorSelect2[] = {1, 1, 1, 1};
             colorBackground[] = {0, 0, 0, 0.2};
             colorSelectBackground[] = {0, 0, 0, 0};
             colorSelectBackground2[] = {0, 0, 0, 0};
             colorScrollbar[] = {0.9, 0.9, 0.9, 1};
+        };
+        class SyptomSeverity: Symptoms {
+            idc = IDC_SEVERITY;
+            x = 17.5 * GUI_GRID_W + GUI_GRID_CENTER_X;
+            w = 4 * GUI_GRID_W;
+        };
+        
+        class MonitorHR: RscText {
+            idc = IDC_MONITOR_HR;
+            style = ST_CENTER;
+            text = "--";
+            x = 6 * GUI_GRID_W + GUI_GRID_CENTER_X;
+            y = 1.5 * GUI_GRID_H + GUI_GRID_CENTER_Y;
+            w = 4 * GUI_GRID_W;
+            h = 1.25 * GUI_GRID_H;
+            colorText[] = {1, 1, 1, 0.9};
+            font = "PuristaSemibold";
+            sizeEx = 1.15 * GUI_GRID_H;
+        };
+        class MonitorRR: MonitorHR {
+            idc = IDC_MONITOR_RR;
+            text = "--/--";
+            x = 10 * GUI_GRID_W + GUI_GRID_CENTER_X;
+            sizeEx = 1 * GUI_GRID_H;
+        };
+        class MonitorSpO2: MonitorHR {
+            idc = IDC_MONITOR_SPO2;
+            text = "--%";
+            x = 14 * GUI_GRID_W + GUI_GRID_CENTER_X;
+            w = 5 * GUI_GRID_W;
+            sizeEx = 1 * GUI_GRID_H;
         };
     };
 };

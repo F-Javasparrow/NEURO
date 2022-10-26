@@ -18,8 +18,12 @@ GVAR(hitPartCache) = createHashMapFromArray [
 	["hitleftleg", ["leftleg", "leftleg"]],
 	["hitrightleg", ["rightleg", "rightleg"]]
 ];
+EGVAR(meidical,woundOfDamage) = createHashMap;
 
-[QEGVAR(medical,woundReceived), {_this call FUNC(woundReceived)}] call CBA_fnc_addEventHandler;
-[QEGVAR(medical,addSymptom), {_this call FUNC(addSymptom)}] call CBA_fnc_addEventHandler;
+[QEGVAR(medical,woundReceived), LINKFUNC(woundReceived)] call CBA_fnc_addEventHandler;
+[QEGVAR(medical,addSymptom), LINKFUNC(addSymptom)] call CBA_fnc_addEventHandler;
+
+[QEGVAR(medical,handleSymptom), LINKFUNC(handleSymptom)] call CBA_fnc_addEventHandler;
+[QEGVAR(medical,handleMedicalStaus), LINKFUNC(handleMedicalStaus)] call CBA_fnc_addEventHandler;
 
 ADDON = true;

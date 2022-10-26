@@ -79,6 +79,6 @@ if (_hitPoint isEqualTo "neuro_hdbracket") exitWith {
     0;
 };
 
-_unit setVariable [format [QGVAR(@%1), _hitPoint], [_damage, [_mainHitPart, _subHitPart]]];
+_unit setVariable [format [QGVAR(@%1), _hitPoint], [_damage, [_mainHitPart/* , _subHitPart */]]];
 
 0

@@ -21,10 +21,13 @@ addMissionEventHandler ["Loaded",{
             _unit addEventHandler ["HandleDamage", LINKFUNC(handleDamage)]
         ];
     };
+
+    [QEGVAR(medical,handleSymptom), [_unit], _unit] call CBA_fnc_targetEvent;
+    [QEGVAR(medical,handleMedicalStaus), [_unit], _unit] call CBA_fnc_targetEvent;
 }, nil, [], true] call CBA_fnc_addClassEventHandler;
 
+/* 
 [QEGVAR(medical,woundReceived), {
-    params ["_unit", "_damages", "_ammo"];
-
     systemChat str _this;
 }] call CBA_fnc_addEventHandler;
+*/

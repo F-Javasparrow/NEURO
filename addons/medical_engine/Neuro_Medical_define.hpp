@@ -1,4 +1,4 @@
-#define ALL_MAINBODYPART   ["head", "torso", "leftarm", "rightarm", "leftleg", "rightleg"]
+#define ALL_MAINBODYPART   ["head", "torso", "ventral", "leftarm", "rightarm", "leftleg", "rightleg"]
 
 #define SUBPART_HEAD       ["crown", "face", "neck"]
 #define SUBPART_TORSO      ["chest", "diaphragm"]
@@ -19,3 +19,7 @@
 #define MAXHEALTH_ALL       MAXHEALTH_HEAD + MAXHEALTH_TORSO + MAXHEALTH_VENTRAL + MAXHEALTH_LEFTARM + MAXHEALTH_RIGHTARM + MAXHEALTH_LEFTLEG + MAXHEALTH_RIGHTLEG
 
 #define MAX_ALLBLOODLOSING  200
+#define DEFAULT_HR          80
+#define DEFAULT_RR_LOW      80
+#define DEFAULT_RR_HIGH     100
+#define DEFAULT_SPO2        100

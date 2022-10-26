@@ -1,3 +1,8 @@
+#define GET_NUMBER(config,default) (if (isNumber (config)) then {getNumber (config)} else {default})
+#define GET_STRING(config,default) (if (isText (config)) then {getText (config)} else {default})
+#define GET_ARRAY(config,default) (if (isArray (config)) then {getArray (config)} else {default})
+
+
 #define GETHR(var1) var1 getVariable [QEGVAR(medical,HR),80];
 #define GETRR(var1) var1 getVariable [QEGVAR(medical,RR),[80,100]];
 #define GETPAIN(var1) var1 getVariable [QEGVAR(medical,Pain),0];
