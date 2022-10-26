@@ -23,6 +23,8 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
     private _visableLevel = GET_NUMBER(_entry >> "visableLevel",0);
     private _visableValue = GET_ARRAY(_entry >> "visableValue",[ARR_2(0,100)]);
 
+    private _maxSeverity = GET_NUMBER(_entry >> "maxSeverity",1);
+
     // -------------------------------------------------------------------------------- //
 
     private _changeValue = createHashMap;
@@ -84,5 +86,5 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
 
     // -------------------------------------------------------------------------------- //
 
-    EGVAR(meidical,symptomsDetails) set [_className, [_displayName, _displayDesc, _selections, _visableLevel, _visableValue, _causeSymptom, _reduceSymptom, _changeValue, _symptomHandlers]];
+    EGVAR(meidical,symptomsDetails) set [_className, [_displayName, _displayDesc, _selections, _maxSeverity, _visableLevel, _visableValue, _causeSymptom, _reduceSymptom, _changeValue, _symptomHandlers]];
 } forEach configProperties [_symptomConfig, "isClass _x"];

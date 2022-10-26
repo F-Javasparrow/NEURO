@@ -27,6 +27,7 @@ if (!local _unit) then {
 		EGVAR(meidical,symptomsDetails) get _symptomClass params [
 			"", "",
 			"_selections",
+			"_maxSeverity",
 			"_visableLevel", "_visableValue",
 			"_causeSymptom_Data", "_reduceSymptom_Data",
 			"_changeValue",

@@ -7,6 +7,7 @@ class Neuro_Medical_Symptoms {
 		selections = ALL_BODY_PARTS;
 		visableLevel = 1;
 		visableValue[] = {0,1};
+		maxSeverity = 1;
 		class details {
 			displayName = "默认症状";
 			displayDesc = "默认症状描述";
@@ -24,6 +25,7 @@ class Neuro_Medical_Symptoms {
 	class Bleeding: SymptomBase {
 		visableLevel = 0;
 		visableValue[] = {0.1,1};
+		maxSeverity = 2;
 		class details {
 			displayName = "失血";
 			displayDesc = "患者正在涌出血液";
@@ -63,34 +65,24 @@ class Neuro_Medical_Symptoms {
 
 	// 肺部
 	class Pneumothorax: SysmptomBase {
+		selections = "torso";
 		visableLevel = 1.5;
 		visableValue[] = {0.75,1};
 		class details {
 			displayName = "气胸 ";
 			displayDesc = "气胸会阻止低血氧的降低 虽然气胸本身并不致命.但如果与导致低氧血症的病症搭配 气胸很容易致死 气胸的负面作用可以通过使用气胸针暂时抵消";
 			type = "Sysmptom";
-			changeHR[] = {0,0,0};
+			changeHR[] = {0,0};
 			changeRR[] = {0,0, 0,0};
-			changeSPo2[] = {0,0,0};
+			changeSPo2[] = {0,0};
 		};
-	};
-	class Pneumothorax: SysmptomBase {
-		visableLevel = 1.5;
-		visableValue[] = {0.75,1};
-		class details {
-			displayName = "气胸 ";
-			displayDesc = "气胸会阻止低血氧的降低 虽然气胸本身并不致命.但如果与导致低氧血症的病症搭配 气胸很容易致死 气胸的负面作用可以通过使用气胸针暂时抵消";
-			type = "Sysmptom";
-			changeHR[] = {0,0,0};
-			changeRR[] = {0,0,0};
-			changePain[] = {0,0,0};
-			changeSPo2[] = {0,0,0};
-		};
-	};
-		
+		class causeSymptom {};
+		class reduceSymptom {};
+	};	
 
 	// 心脏
 	class CardiacArrest: SymptomBase {
+		selections = "torso";
 		visableLevel = 0.8;
 		visableValue[] = {0,1};
 		class details {
@@ -106,17 +98,21 @@ class Neuro_Medical_Symptoms {
 	};
 
 	// 躯干
-	class InternalBleeding; SysmptomBase {
+	class InternalBleeding: SysmptomBase {
+		selections = "torso";
 	    visableLevel = 1;
 		visableValue[] = {0.2,1};
-	        class details {
+		maxSeverity = 2;
+	    class details {
 			displayName = "内出血";
 			displayDesc = "内出血会迅速让病人失血，必须迅速处理";
 			type = "Sysmptom";
-			changeHR[] = {0,0,0};
+			changeHR[] = {0,0};
 			changeRR[] = {0,0, 0,0};
-			changeSPo2 = {0,0,0};
+			changeSPo2[] = {0,0};
 		};
+		class causeSymptom {};
+		class reduceSymptom {};
 	};
 			
 	// 四肢

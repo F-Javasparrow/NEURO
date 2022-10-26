@@ -7,6 +7,12 @@ private _symptomInfo = _unit getVariable [QEGVAR(medical,symptomInfo),[]];
 
 _symptomIndex = _symptomInfo findIf {_x # 0 isEqualTo _symptomClass && _x # 1 isEqualTo _hitPartInfo};
 
+EGVAR(meidical,symptomsDetails) get _symptomClass params [
+	"", "",
+	"_selections",
+	"_maxSeverity",
+];
+
 if(_symptomIndex != -1) then {
 	_oldSeverity = _symptomInfo # _symptomIndex # 2;
 	if((toLower _adjustType) isEqualTo "set") then {_severity = 0 max (_severity)};
@@ -14,7 +20,7 @@ if(_symptomIndex != -1) then {
 
 	_symptomInfo set [_symptomIndex, [_symptomClass, _hitPartInfo, _severity]];
 } else {
-	_severity = 0 max (_severity);
+	_severity = 0 max (_severity) min _maxSeverity;
 
 	_symptomInfo pushBack [_symptomClass, _hitPartInfo, _severity];
 };

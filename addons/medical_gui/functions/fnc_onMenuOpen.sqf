@@ -71,6 +71,7 @@ GVAR(menuPFH) = [{
             EGVAR(meidical,symptomsDetails) get _symptomClass params [
                 "_displayName", "_displayDesc",
                 "_selections",
+                "_maxSeverity",
                 "_visableLevel", "_visableValue",
                 "", "",
                 "",
@@ -82,7 +83,7 @@ GVAR(menuPFH) = [{
             ]; 
             */
 
-            if(/* _severity >= _visableValue#0 && _severity <= _visableValue#1  && */ _mainHitPart isEqualTo _selectedMainPart) then { 
+            if(_severity >= _visableValue#0 && _severity <= _visableValue#1  && _mainHitPart isEqualTo _selectedMainPart) then { 
                 _entries pushBack [_displayName, [1,1,1,1], str (_severity * 100) + "%", [1,1,1,1]];
             };
         }forEach _symptomInfo;
