@@ -12,7 +12,7 @@ private _typeOfSymptoms = _ammo call FUNC(getTypeOfSymptoms);
 
         if!(_hitPart # 0 in _selections || _damage < 0) then {continue};
 
-        private _severity = linearConversion [0.1, 2, _damage * _severityCoef, 0.5^3, 1, true];
-        [QEGVAR(medical,addSymptom), [_unit, _syptomsClass, _hitPart, ["add", _severity]]] call CBA_fnc_localEvent;
+        private _severity = linearConversion [0.1, 2, _damage * _severityCoef, 0, 1, true];
+        [QEGVAR(medical,addSymptom), [_unit, _syptomsClass, _hitPart # 0, ["add", _severity]]] call CBA_fnc_localEvent;
     }forEach _allDamages;
 }forEach _typeOfSymptoms;

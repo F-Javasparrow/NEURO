@@ -41,8 +41,8 @@ private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
 		_changedValueList pushBack _value;
 	}forEach [[_unitHR, _unitHR_Target],[_unitRR, _unitRR_Target],[_unitSpo2, _unitSpo2_Target]];
 
-	_unitHR = 0 max (_changedValueList # 0);
-	_unitRR = 0 max (_changedValueList # 1);
+	_unitHR = 0 max (_changedValueList # 0) min 1000;
+	_unitRR = 0 max (_changedValueList # 1) min 1000;
 	_unitSpo2 = 0 max (_changedValueList # 2) min 100;
 	
 	if(_unitHR <= 0) then {

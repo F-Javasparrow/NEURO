@@ -1,11 +1,9 @@
 #include "script_component.hpp"
-params ["_unit", "_symptomClass", "_hitPartInfo", "_severityInfo"];
-_hitPartInfo params ["_mainHitPart", "_subHitPart"];
-_severityInfo params ["_adjustType", "_severity"];
+params ["_unit", "_symptomClass", "_mainHitPart", "_severityInfo"];
+_severityInfo params ["_type", "_severity"];
 
 private _symptomInfo = _unit getVariable [QEGVAR(medical,symptomInfo),[]];
-
-_symptomIndex = _symptomInfo findIf {_x # 0 isEqualTo _symptomClass && _x # 1 isEqualTo _hitPartInfo};
+private _symptomIndex = _symptomInfo findIf {_x # 0 isEqualTo _symptomClass && _x # 1 isEqualTo _mainHitPart};
 
 EGVAR(meidical,symptomsDetails) get _symptomClass params [
 	"", "",
@@ -14,19 +12,17 @@ EGVAR(meidical,symptomsDetails) get _symptomClass params [
 ];
 
 if(_symptomIndex != -1) then {
-	_oldSeverity = _symptomInfo # _symptomIndex # 2;
-	if((toLower _adjustType) isEqualTo "set") then {_severity = 0 max (_severity) min _maxSeverity};
-	if((toLower _adjustType) isEqualTo "add") then {_severity = 0 max (_severity + _oldSeverity) min _maxSeverity};
+	private _oldSeverity = _symptomInfo # _symptomIndex # 2;
+	if((toLower _type) isEqualTo "set") then {_severity = 0 max (_severity) min _maxSeverity};
+	if((toLower _type) isEqualTo "add") then {_severity = 0 max (_severity + _oldSeverity) min _maxSeverity};
 
-	_symptomInfo set [_symptomIndex, [_symptomClass, _hitPartInfo, _severity]];
+	_symptomInfo set [_symptomIndex, [_symptomClass, _mainHitPart, _severity]];
 } else {
 	_severity = 0 max (_severity) min _maxSeverity;
 
-	_symptomInfo pushBack [_symptomClass, _hitPartInfo, _severity];
+	_symptomInfo pushBack [_symptomClass, _mainHitPart, _severity];
 };
 
-systemChat str _severity;
-
 _unit setVariable [QEGVAR(medical,symptomInfo), _symptomInfo];
-hint str [_symptomClass, _hitPartInfo, _severity];
-[_symptomClass, _hitPartInfo, _severity];
+
+[_symptomClass, _mainHitPart, _severity];

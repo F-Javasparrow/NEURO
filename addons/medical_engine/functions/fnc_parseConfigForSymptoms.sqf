@@ -31,9 +31,12 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
 
     _changeValue set ["TYPE", GET_STRING(_entry >> "details" >> "type","unknown")];
     
-    _changeValue set ["HR", GET_ARRAY(_entry >> "details" >> "changeHR",[ARR_3(0,0,0)])];
-    _changeValue set ["RR", GET_ARRAY(_entry >> "details" >> "changeRR",[ARR_3(0,0,0)])];
-    _changeValue set ["SpO2", GET_ARRAY(_entry >> "details" >> "changeSPo2",[ARR_3(0,0,0)])];
+    _changeValue set ["changeHR", GET_ARRAY(_entry >> "details" >> "changeHR",[ARR_2(0,0)])];
+    _changeValue set ["changeRR", GET_ARRAY(_entry >> "details" >> "changeRR",[ARR_4(0,0,0,0)])];
+    _changeValue set ["changeSPo2", GET_ARRAY(_entry >> "details" >> "changeSPo2",[ARR_2(0,0)])];
+    _changeValue set ["targetSPo2", GET_ARRAY(_entry >> "details" >> "targetHR",[ARR_2(0,0)])];
+    _changeValue set ["targetRR", GET_ARRAY(_entry >> "details" >> "targetRR",[ARR_4(0,0,0,0)])];
+    _changeValue set ["targetSpO2", GET_ARRAY(_entry >> "details" >> "targetSPo2",[ARR_2(0,0)])];
 
     // -------------------------------------------------------------------------------- //
 
@@ -61,7 +64,7 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
             _perAdd = GET_NUMBER(_subentry >> "perAdd",0);
             _repeat = GET_NUMBER(_subentry >> "repeat",0);
                 
-            _causeSymptom pushback [_symptom,_type,_addPart,_severityThreshold,_perAdd,_repeat];
+            _causeSymptom pushback [_symptom,_type,_addPart,_severityThreshold,_perAdd/100,_repeat];
         } forEach configProperties [_entry >> "causeSymptom", "isClass _x", false];
     };
 

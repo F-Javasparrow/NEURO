@@ -122,7 +122,7 @@ class Neuro_Medical_Symptoms {
 			type = "Sysmptom";
 			changeHR[] = {0,0};
 			changeRR[] = {0,0, 0,0};
-			changeSPo2[] = {0.02,0.05};
+			changeSPo2[] = {0,0.05};
 		};
 		class causeSymptom {
 			class ShortnessBreath {
@@ -144,7 +144,7 @@ class Neuro_Medical_Symptoms {
 			type = "Sysmptom";
 			changeHR[] = {0,0};
 			changeRR[] = {0,0, 0,0};
-			changeSPo2[] = {-0.1,-0.15};
+			changeSPo2[] = {0,-0.15};
 		};
 		
 	};
@@ -158,7 +158,7 @@ class Neuro_Medical_Symptoms {
 			type = "Sysmptom";
 			changeHR[] = {0,0};
 			changeRR[] = {0,0, 0,0};
-			changeSPo2[] = {0.1,0.15};
+			changeSPo2[] = {0,20};
 		};
 	};
 
@@ -217,7 +217,7 @@ class Neuro_Medical_Symptoms {
 			displayName = "心搏停止";
 			displayDesc = "心搏停止";
 			type = "Symptom";
-			changeHR[] = {0,0};
+			changeHR[] = {-1,-10};
 			changeRR[] = {0,0, 0,0};
 			changeSPo2[] = {0,0};
 		};
@@ -378,7 +378,7 @@ class Neuro_Medical_Symptoms {
 				addPart = "_SAME_";
 				type = "add";
 				severityThreshold = 0.15;
-				perAdd = 0.015;
+				perAdd = 1.5;
 				repeat = -1;
 			};
 			class ArterialBleeding {
@@ -402,7 +402,7 @@ class Neuro_Medical_Symptoms {
 				addPart = "_SAME_";
 				type = "add";
 				severityThreshold = 0.15;
-				perAdd = 0.015;
+				perAdd = 1.5;
 				repeat = -1;
 			};
 			class ArterialBleeding {
