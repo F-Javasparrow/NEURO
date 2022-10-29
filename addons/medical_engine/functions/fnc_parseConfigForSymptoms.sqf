@@ -33,14 +33,11 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
     
     _changeValue set ["HR", GET_ARRAY(_entry >> "details" >> "changeHR",[ARR_3(0,0,0)])];
     _changeValue set ["RR", GET_ARRAY(_entry >> "details" >> "changeRR",[ARR_3(0,0,0)])];
-    _changeValue set ["SPO2", GET_ARRAY(_entry >> "details" >> "changeSPo2",[ARR_3(0,0,0)])];
+    _changeValue set ["SpO2", GET_ARRAY(_entry >> "details" >> "changeSPo2",[ARR_3(0,0,0)])];
 
     // -------------------------------------------------------------------------------- //
 
-    /* 
-    _changeValue set ["BLOODLOSING", GET_ARRAY(_entry >> "details" >> "bloodLosing",nil)];
-    _changeValue set ["MUTILATE", GET_NUMBER(_entry >> "details" >> "mutilate",nil)];
-    */
+    _changeValue set ["Bloodloss", GET_ARRAY(_entry >> "details" >> "bloodLosing",[ARR_2(0,0)])];
 
     // -------------------------------------------------------------------------------- //
 

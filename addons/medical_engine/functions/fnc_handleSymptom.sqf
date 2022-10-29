@@ -74,7 +74,7 @@ if (!local _unit) then {
 		SETRR(_unit,[_unitRR_Low, _unitRR_High])
 
 		// 血氧
-		private _changeSpo2 = _changeValue get "SPO2";
+		private _changeSpo2 = _changeValue get "SpO2";
 		private _changeSpo2 = (_changeSpo2 # 0 - _changeSpo2 # 1) * _severity;
 		private _unitSpo2 = GETSPO2(_unit);
 
@@ -84,6 +84,11 @@ if (!local _unit) then {
 			};
 		} else {SETSPO2(_unit,0 max (_unitSpo2 + _changeSpo2))};
 
+		// 血液流失
+		private _bloodloss = _changeValue get "Bloodloss";
+		_bloodloss  = (_bloodloss # 0 - _bloodloss # 1) * _severity;
+		private _unitBloodVolume = GETBLOODVOLUME(_unit);
+		SETBLOODVOLUME(_unit,_unitBloodVolume - _bloodloss);
 
 		// 特殊类型处理
 		private _type = _changeValue get "TYPE";
@@ -120,8 +125,6 @@ if (!local _unit) then {
 
 		}forEach _reduceSymptom;
 		_x set [4, _reduceSymptom];
-
-		systemChat str [_symptomClass,_causeSymptom];
 
 		// 症状独立函数
 		private _symptomData = [_unit, _symptomClass, _hitPart, _severity];

@@ -3,8 +3,6 @@ params ["_unit", "_allDamages", "_ammo"];
 
 private _typeOfSymptoms = _ammo call FUNC(getTypeOfSymptoms);
 
-systemChat str _typeOfSymptoms;
-
 {
     _x params ["_syptomsClass", "_severityCoef"];
     EGVAR(meidical,symptomsDetails) get _syptomsClass params ["", "", "_selections"];
