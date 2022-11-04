@@ -1,0 +1,9 @@
+name = "Neuro"
+prefix = "neuro"
+author = "Kal'tsitly"
+template = "x"
+mainprefix = "z"
+include = ["./include"]
+files = ["mod.cpp"]
+folder_optionals = true
+sig_version = 3

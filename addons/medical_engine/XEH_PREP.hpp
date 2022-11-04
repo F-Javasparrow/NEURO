@@ -7,4 +7,5 @@ PREP(parseConfigForSymptoms);
 PREP(parseHandlersCfg);
 PREP(removeSymptom);
 PREP(symptomHandlerBase);
+PREP(TriggerSymptom);
 PREP(woundReceived);

@@ -4,7 +4,7 @@
 
 // 心率&血压&血氧
 #define GETHR(var1) var1 getVariable [QEGVAR(medical,HR),80]
-#define GETRR(var1) var1 getVariable [QEGVAR(medical,RR),[80,100]]
+#define GETRR(var1) var1 getVariable [QEGVAR(medical,RR),[ARR_2(80,100)]]
 #define GETSPO2(var1) var1 getVariable [QEGVAR(medical,SpO2),100]
 
 #define SETHR(var1,var2) var1 setVariable [QEGVAR(medical,HR),var2]
@@ -13,7 +13,7 @@
 
 
 #define GETHR_T(var1) var1 getVariable [QEGVAR(medical,HR_Target),80]
-#define GETRR_T(var1) var1 getVariable [QEGVAR(medical,RR_Target),[80,100]]
+#define GETRR_T(var1) var1 getVariable [QEGVAR(medical,RR_Target),[ARR_2(80,100)]]
 #define GETSPO2_T(var1) var1 getVariable [QEGVAR(medical,SpO2),100]
 
 #define SETHR_T(var1,var2) var1 setVariable [QEGVAR(medical,HR_Target),var2]
@@ -23,3 +23,6 @@
 // 其他
 #define GETBLOODVOLUME(var1) var1 getVariable [QEGVAR(medical,BloodVolume),6000]
 #define SETBLOODVOLUME(var1,var2) var1 setVariable [QEGVAR(medical,BloodVolume),var2]
+
+#define GETVISCOSITY(var1) var1 getVariable [QEGVAR(medical,Viscosity),100]
+#define SETViscosity(var1,var2) var1 setVariable [QEGVAR(medical,Viscosity),var2]

@@ -24,6 +24,6 @@ EGVAR(meidical,woundOfDamage) = createHashMap;
 [QEGVAR(medical,addSymptom), LINKFUNC(addSymptom)] call CBA_fnc_addEventHandler;
 
 [QEGVAR(medical,handleSymptom), LINKFUNC(handleSymptom)] call CBA_fnc_addEventHandler;
-[QEGVAR(medical,handleMedicalStaus), LINKFUNC(handleMedicalStaus)] call CBA_fnc_addEventHandler;
+[QEGVAR(medical,handleMedicalStatus), LINKFUNC(handleMedicalStatus)] call CBA_fnc_addEventHandler;
 
 ADDON = true;

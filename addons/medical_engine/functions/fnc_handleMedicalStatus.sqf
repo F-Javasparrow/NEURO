@@ -8,7 +8,8 @@ if (!local _unit) then {
     ["handleMedicalState", [_unit], _unit] call CBA_fnc_targetEvent;
 };
 
-private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
+// private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
+private _deltaT = 1;
 
 [{
 	params ["_args", "_idPFH"];
@@ -18,38 +19,52 @@ private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
         _unit setVariable [QEGVAR(medical,MedicalStatus_PFH), nil];
     };
 
+	// 心率
 	private _unitHR = GETHR(_unit);
-	private _unitRR = GETRR(_unit);
-	private _unitSpo2 = GETSPO2(_unit);
-	
 	private _unitHR_Target = GETHR_T(_unit);
-	private _unitRR_Target = GETRR_T(_unit);
-	private _unitSpo2_Target = GETSPO2_T(_unit);
-
-	private _changedValueList = [];
-	{
-		_x param ["_value","_targetValue"];
-
-		_changeValue = round(_targetValue - _value) / 2;
-
-		if (_changeValue < 0) then {
-        _value = (_value + _deltaT * _changeValue) max _targetHR;
-		} else {
-			_value = (_value + _deltaT * _changeValue) min _targetHR;
-		};
-
-		_changedValueList pushBack _value;
-	}forEach [[_unitHR, _unitHR_Target],[_unitRR, _unitRR_Target],[_unitSpo2, _unitSpo2_Target]];
-
-	_unitHR = 0 max (_changedValueList # 0) min 1000;
-	_unitRR = 0 max (_changedValueList # 1) min 1000;
-	_unitSpo2 = 0 max (_changedValueList # 2) min 100;
 	
-	if(_unitHR <= 0) then {
-		
+	_changeValue = round(_unitHR_Target - _unitHR) / 2;
+	if (_changeValue < 0) then {
+    	_unitHR = (_unitHR + (_deltaT * _changeValue)) max _unitHR_Target;
+	} else {
+		_unitHR = (_unitHR + (_deltaT * _changeValue)) min _unitHR_Target;
 	};
 
+	// 血压
+	private _unitRR = GETRR(_unit);
+	private _unitRR_Low = _unitRR # 0;
+	private _unitRR_High = _unitRR # 1;
+	private _unitRR_Target = GETRR_T(_unit);
+	private _unitRR_Low_Target = _unitRR_Target # 0;
+	private _unitRR_High_Target = _unitRR_Target # 1;
+
+	_changeValue = round(_unitRR_Low_Target - _unitRR_Low) / 2;
+	if (_changeValue < 0) then {
+    	_unitRR_Low = (_unitRR_Low + (_deltaT * _changeValue)) max _unitRR_Low_Target;
+	} else {
+		_unitRR_Low = (_unitRR_Low + (_deltaT * _changeValue)) min _unitRR_Low_Target;
+	};
+	
+	_changeValue = round(_unitRR_High_Target - _unitRR_High) / 2;
+	if (_changeValue < 0) then {
+    	_unitRR_High = (_unitRR_High + (_deltaT * _changeValue)) max _unitRR_High_Target;
+	} else {
+		_unitRR_High = (_unitRR_High + (_deltaT * _changeValue)) min _unitRR_High_Target;
+	};
+
+	// 血氧
+	private _unitSpO2 = GETSPO2(_unit);
+	private _unitSpO2_Target = GETSPO2_T(_unit);
+	_changeValue = round(_unitSpO2_Target - _unitSpO2) / 2;
+	if (_changeValue < 0) then {
+    	_unitSpO2 = (_unitSpO2 + (_deltaT * _changeValue)) max _unitSpO2_Target;
+	} else {
+		_unitSpO2 = (_unitSpO2 + (_deltaT * _changeValue)) min _unitSpO2_Target;
+	};
+
+	[_unit] call FUNC(TriggerSymptom);
+
 	SETHR(_unit,_unitHR);
-	SETRR(_unit,_unitRR);
-	SETSPO2(_unit,_unitSpo2);
+	SETRR(_unit,[ARR_2(_unitRR_Low,_unitRR_High)]);
+	SETSPO2(_unit,_unitSpO2);
 }, _deltaT, [_unit, _deltaT]] call CBA_fnc_addPerFrameHandler;

@@ -1,11 +1,10 @@
 #include "script_component.hpp"
 
-if (!hasInterface) exitWith {};
-
-[] call FUNC(collectActions);
-
 GVAR(selectedMainPart) = 0;
 GVAR(menuPFH) = -1;
+
+if (!hasInterface) exitWith {};
+[] call FUNC(collectActions);
 
 ["Neuro medical", QGVAR(openMedicalMenuKey), "打开医疗菜单", {
     private _target = cursorTarget;

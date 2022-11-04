@@ -23,7 +23,7 @@ addMissionEventHandler ["Loaded",{
     };
 
     [QEGVAR(medical,handleSymptom), [_unit], _unit] call CBA_fnc_targetEvent;
-    [QEGVAR(medical,handleMedicalStaus), [_unit], _unit] call CBA_fnc_targetEvent;
+    [QEGVAR(medical,handleMedicalStatus), [_unit], _unit] call CBA_fnc_targetEvent;
 }, nil, [], true] call CBA_fnc_addClassEventHandler;
 
 /* 

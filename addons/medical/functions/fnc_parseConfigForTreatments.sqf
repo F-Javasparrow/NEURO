@@ -1,53 +1,46 @@
 #include "script_component.hpp"
 
-// --- parse Symptoms
-EGVAR(meidical,symptomTypeCache) = createHashMap;
-EGVAR(meidical,symptomsDetails) = createHashMap;
+// --- parse medications
+EGVAR(meidical,medicationTypeCache) = createHashMap;
+EGVAR(meidical,medicationDetails) = createHashMap;
 
-private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
+private _medicationConfig = configFile >> "Neuro_Medical_Treatments";
 
 {
     private _entry = _x;
     private _className = configName _entry;
 
-    if (_className isEqualTo "symptomHandlers") then {continue};
+    if (_className isEqualTo "treatmentHandlers") then {continue};
 
-    EGVAR(meidical,symptomTypeCache) set [_className, _className];
-    EGVAR(meidical,symptomsDetails) set [_className, _className];
+    EGVAR(meidical,medicationTypeCache) set [_className, _className];
+    EGVAR(meidical,medicationDetails) set [_className, _className];
 
     // -------------------------------------------------------------------------------- //
+
     private _displayName = GET_STRING(_entry >> "displayName","NullName");
     private _displayDesc = GET_STRING(_entry >> "displayDesc","NullDesc");
 
     private _selections = GET_ARRAY(_entry >> "selections",ALL_MAINBODYPART);
-    private _visableLevel = GET_NUMBER(_entry >> "visableLevel",0);
-    private _visableValue = GET_ARRAY(_entry >> "visableValue",[ARR_2(0,100)]);
-
-    private _maxSeverity = GET_NUMBER(_entry >> "maxSeverity",1);
-
-    // -------------------------------------------------------------------------------- //
+    private _timeInSystem = GET_ARRAY(_entry >> "timeInSystem",[ARR_2(10,600)]);
+    private _efficiency = GET_NUMBER(_entry >> "efficiency",0.2);
 
     private _data = createHashMap;
     private _type = GET_STRING(_entry >> "details" >> "type","unknown");
     _data set ["type", _type];
-    
+
     _data set ["changeHR", GET_ARRAY(_entry >> "details" >> "changeHR",[ARR_2(0,0)])];
     _data set ["changeRR", GET_ARRAY(_entry >> "details" >> "changeRR",[ARR_4(0,0,0,0)])];
     _data set ["changeSpO2", GET_ARRAY(_entry >> "details" >> "changeSpO2",[ARR_2(0,0)])];
-    _data set ["targetHR", GET_ARRAY(_entry >> "details" >> "targetHR",[ARR_2(0,0)])];
-    _data set ["targetRR", GET_ARRAY(_entry >> "details" >> "targetRR",[ARR_4(0,0,0,0)])];
-    _data set ["targetSpO2", GET_ARRAY(_entry >> "details" >> "targetSpO2",[ARR_2(0,0)])];
-
-    _data set ["Bloodloss", GET_ARRAY(_entry >> "details" >> "bloodLosing",[ARR_2(0,0)])];
+    _data set ["changeViscosity", GET_ARRAY(_entry >> "details" >> "changeViscosity",[ARR_2(0,0)])];
 
     _data set ["selfReduce", GET_NUMBER(_entry >> "details" >> "selfReduce",0)];
 
     // -------------------------------------------------------------------------------- //
 
-    private _symptomHandlers = [];
-    if (isClass(_entry >> "symptomHandlers")) then {
-        _symptomHandlers = [_entry >> "symptomHandlers"] call FUNC(parseHandlersCfg);
-        reverse _symptomHandlers;
+    private _medicationHandlers = [];
+    if (isClass(_entry >> "medicationHandlers")) then {
+        _medicationHandlers = [_entry >> "medicationHandlers"] call EFUNC(medical_engine,parseHandlersCfg);
+        reverse _medicationHandlers;
     };
 
     // -------------------------------------------------------------------------------- //
@@ -86,6 +79,6 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
 
     // -------------------------------------------------------------------------------- //
 
-    EGVAR(meidical,symptomsDetails) set [_className, [_displayName, _displayDesc, _selections, _maxSeverity, _visableLevel, _visableValue, _causeSymptom, _reduceSymptom, _data, _symptomHandlers]];
+    EGVAR(meidical,medicationDetails) set [_className, [_displayName, _displayDesc, _selections, _timeInSystem, _efficiency, _causeSymptom, _reduceSymptom, _data, _medicationHandlers]];
 
-} forEach configProperties [_symptomConfig, "isClass _x"];
+} forEach configProperties [_medicationConfig, "isClass _x"];

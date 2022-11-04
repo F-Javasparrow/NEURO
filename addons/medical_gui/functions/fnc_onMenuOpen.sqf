@@ -52,17 +52,18 @@ GVAR(menuPFH) = [{
         "# "+"左腿",
         "# "+"右腿"
     ] select GVAR(selectedMainPart);
-    _entries pushBack [_mainPartName, [1,1,1,1], "", [1,1,1,1]];
+    _entries pushBack ["", _mainPartName, [1,1,1,1], "", [1,1,1,1]];
 
-    // 症状-------------------------------------------------------------- //
+    // 症状 & 药物------------------------------------------------------- //
     private _ctrlSyptoms = _display displayCtrl IDC_SYPTOMS;
     private _ctrlSyptomSeverity = _display displayCtrl IDC_SEVERITY;
     //private _ctrlSyptomsPic = _display displayCtrl IDC_SYPTOMSPIC;
     private _selectedMainPart = GVAR(Inedx2MainPart) get GVAR(selectedMainPart);
-    private _symptomInfo = _unit getVariable [QEGVAR(medical,symptomInfo),[]];
 
+    private _symptomInfo = _unit getVariable [QEGVAR(medical,symptomInfo),[]];
+    private _medicationInfo = _unit getVariable [QEGVAR(medical,medicationInfo),[]];
     if(_symptomInfo isEqualTo []) then {
-        _entries pushBack ["无症状", [1,1,1,1], "", [1,1,1,1]];//--- ToDo: Localize;
+        _entries pushBack ["", "无症状", [1,1,1,1], "", [1,1,1,1]];//--- ToDo: Localize;
     } else {
         {
             _x params ["_symptomClass", "_hitPartInfo", "_severity"];
@@ -72,30 +73,43 @@ GVAR(menuPFH) = [{
                 "_displayName", "_displayDesc",
                 "_selections",
                 "_maxSeverity",
-                "_visableLevel", "_visableValue",
-                "", "",
-                "",
-                ""
+                "_visableLevel", "_visableValue"
             ];
-            /* 
-            EGVAR(gui,symptomPic) get _symptomClass params [
-                "_symptomPicPath"
-            ]; 
-            */
 
-            if(_severity > _visableValue#0 /* && _severity <= _visableValue #1*/  && _mainHitPart isEqualTo _selectedMainPart) then { 
-                _entries pushBack [_displayName, [1,1,1,1], str (ceil (_severity * 10000) / 100) + "%", [1,1,1,1]];
+            private _picPath = GET_STRING(configFile >> "Neuro_Medical_Symptoms" >> _symptomClass >> "displayPic","");
+
+            if(_severity > _visableValue#0 && _severity <= _visableValue #1 && _mainHitPart isEqualTo _selectedMainPart) then { 
+                _entries pushBack [_picPath, _displayName, [1,1,1,1], str (ceil (_severity * 10000) / 100) + "%", [1,1,1,1]];
             };
         }forEach _symptomInfo;
+
+        {
+            _x params ["_medicationClass", "_hitPartInfo", "_severity"];
+
+            EGVAR(meidical,medicationDetails) get _medicationClass params [
+			    "_displayName", "_displayDesc",
+			    "_selections"
+		    ];
+
+            _entries pushBack ["", _displayName, [1,1,1,1], str (ceil (_severity * 10000) / 100) + "%", [1,1,1,1]];
+        }forEach _medicationInfo;
     };
 
     lbClear _ctrlSyptoms;
     lbClear _ctrlSyptomSeverity;
     {
-        _x params ["_textSyptoms", "_colorSyptoms", "_textSeverity", "_colorSeverity"];
+        _x params ["_picPath", "_textSyptoms", "_colorSyptoms", "_textSeverity", "_colorSeverity"];
 
         private _index = _ctrlSyptoms lbAdd _textSyptoms;
         _ctrlSyptoms lbSetColor [_index, _colorSyptoms];
+
+        if!(_picPath isEqualTo "") then {
+            _ctrlSyptoms lbSetPicture [_index, _picPath];
+            _ctrlSyptoms lbSetPictureColor [_index, [1,1,1,1]];
+        } else {
+            _ctrlSyptoms lbSetPictureColor [_index, [1,1,1,0]];
+        };
+
         private _index = _ctrlSyptomSeverity lbAdd _textSeverity;
         _ctrlSyptomSeverity lbSetColor [_index, _colorSeverity];
     } forEach _entries;
