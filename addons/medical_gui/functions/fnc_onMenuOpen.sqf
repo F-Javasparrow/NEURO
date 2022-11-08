@@ -18,6 +18,7 @@ GVAR(menuPFH) = [{
     if (isNull _display) exitWith {};
 
     private _selectedCategory = lbCurSel IDC_Category;
+    private _selectedCategory = lbText [IDC_Category, _selectedCategory];
     
     // 动作-------------------------------------------------------------- //
     {
@@ -35,8 +36,7 @@ GVAR(menuPFH) = [{
             _ctrl ctrlSetText _displayName;
             _ctrl ctrlShow true;
 
-            _ctrl ctrlAddEventHandler ["ButtonClick", _statement];
-            _ctrl ctrlAddEventHandler ["ButtonClick", {GVAR(pendingReopen) = true}];
+            _ctrl ctrlAddEventHandler ["ButtonClick",_statement];
 
             _idcIndex = _idcIndex + 1;
         };
@@ -51,18 +51,20 @@ GVAR(menuPFH) = [{
         "# "+"右手",
         "# "+"左腿",
         "# "+"右腿"
-    ] select GVAR(selectedMainPart);
+    ] select GVAR(selectedMainPart_Index);
     _entries pushBack ["", _mainPartName, [1,1,1,1], "", [1,1,1,1]];
 
     // 症状 & 药物------------------------------------------------------- //
     private _ctrlSyptoms = _display displayCtrl IDC_SYPTOMS;
     private _ctrlSyptomSeverity = _display displayCtrl IDC_SEVERITY;
     //private _ctrlSyptomsPic = _display displayCtrl IDC_SYPTOMSPIC;
-    private _selectedMainPart = GVAR(Inedx2MainPart) get GVAR(selectedMainPart);
+    GVAR(selectedMainPart) = GVAR(Inedx2MainPart) get GVAR(selectedMainPart_Index);
 
-    private _symptomInfo = _unit getVariable [QEGVAR(medical,symptomInfo),[]];
-    private _medicationInfo = _unit getVariable [QEGVAR(medical,medicationInfo),[]];
-    if(_symptomInfo isEqualTo []) then {
+    private _symptomInfo = _unit getVariable[QEGVAR(medical,symptomInfo),[]];
+    private _medicationInfo = _unit getVariable[QEGVAR(medical,medicationInfo),[]];
+    private _medicLevel = player getVariable[QEGVAR(medical,medicLevel),0];
+
+    if(_symptomInfo isEqualTo [] && _medicationInfo isEqualTo []) then {
         _entries pushBack ["", "无症状", [1,1,1,1], "", [1,1,1,1]];//--- ToDo: Localize;
     } else {
         {
@@ -76,9 +78,12 @@ GVAR(menuPFH) = [{
                 "_visableLevel", "_visableValue"
             ];
 
-            private _picPath = GET_STRING(configFile >> "Neuro_Medical_Symptoms" >> _symptomClass >> "displayPic","");
+            private _picPath = "";
+            if(isClass (configFile >> "Neuro_Medical_Symptoms" >> _symptomClass)) then {
+                _picPath = GET_STRING(configFile >> "Neuro_Medical_Symptoms" >> _symptomClass >> "displayPic","");
+            };
 
-            if(_severity > _visableValue#0 && _severity <= _visableValue #1 && _mainHitPart isEqualTo _selectedMainPart) then { 
+            if(_severity > _visableValue#0 && _severity <= _visableValue #1 && _visableLevel <= _medicLevel && _mainHitPart isEqualTo GVAR(selectedMainPart)) then { 
                 _entries pushBack [_picPath, _displayName, [1,1,1,1], str (ceil (_severity * 10000) / 100) + "%", [1,1,1,1]];
             };
         }forEach _symptomInfo;
@@ -125,9 +130,9 @@ GVAR(menuPFH) = [{
 	private _unitRR = GETRR(_unit);
 	private _unitSpo2 = GETSPO2(_unit);
 
-    ctrlSetText [IDC_MONITOR_HR, "HR:" + str _unitHR];
-    ctrlSetText [IDC_MONITOR_RR, "RR:" + str (_unitRR#0) + "/" + str (_unitRR#1)];
-    ctrlSetText [IDC_MONITOR_SPO2, "SpO2:" + str _unitSpo2 + "%"];
+    ctrlSetText [IDC_MONITOR_HR, "HR:" + str(ceil (_unitHR*10)/10)];
+    ctrlSetText [IDC_MONITOR_RR, "RR:" + str(ceil (_unitRR # 0)) + "/" + str(ceil (_unitRR # 1))];
+    ctrlSetText [IDC_MONITOR_SPO2, "SpO2:" + str(ceil (_unitSpo2*10)/10) + "%"];
 
     _ctrlMonitorHR ctrlSetTextColor [1, 0, 0, 1];
     _ctrlMonitorRR ctrlSetTextColor [0, 1, 0, 1];

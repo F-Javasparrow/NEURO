@@ -3,11 +3,12 @@
 GVAR(actions) = [];
 
 {
-    private _configName = configName _x;
-    private _displayName = getText (_x >> "displayName");
-    private _category = getText (_x >> "category");
-    private _condition = compile format [QUOTE([ARR_4(ACE_player, GVAR(target), %1 select GVAR(selectedBodyPart), '%2')] call DEFUNC(medical_treatment,canTreatCached)), ALL_BODY_PARTS, _configName];
-    private _statement = compile format [QUOTE([ARR_4(ACE_player, GVAR(target), %1 select GVAR(selectedBodyPart), '%2')] call DEFUNC(medical_treatment,treatment)), ALL_BODY_PARTS, _configName];
+    private _entry = _x;
+    private _configName = configName _entry;
+    private _displayName = GET_STRING(_entry >> "displayName",_configName);
+    private _category = GET_STRING(_entry >> "category","Other");
+    private _condition = compile GET_STRING(_entry >> "condition","");
+    private _statement = compile GET_STRING(_entry >> "statement","");
 
     GVAR(actions) pushBack [_displayName, _category, _condition, _statement];
-} forEach configProperties [configFile >> QEGVAR(medical_treatment,actions), "isClass _x"];
+} forEach configProperties [configFile >> "Neuro_Medical_Treatment_Actions", "isClass _x"];

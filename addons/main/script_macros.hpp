@@ -3,8 +3,16 @@
 
 #define DFUNC(var1) TRIPLES(ADDON,fnc,var1)
 
+#define SFUNC(var1) call FUNC(var1)
+#define QSFUNC(var1) QUOTE(SFUNC(var1))
+#define SEFUNC(var1,var2) call EFUNC(var1,var2)
+#define QSEFUNC(var1,var2) QUOTE(SEFUNC(var1,var2))
+
 #define LINKFUNC(var1) {_this call FUNC(var1)}
 #define LINKEFUNC(var1,var2) {_this call EFUNC(var1,var2)}
+
+#define SYNCVAR(var1,var2) GVAR(var2)=EGVAR(var1,var2)
+#define ESYNCVAR(var1,var2,var3) EGVAR(var2,var3)=EGVAR(var1,var3)
 
 #ifdef DISABLE_COMPILE_CACHE
   #undef PREP

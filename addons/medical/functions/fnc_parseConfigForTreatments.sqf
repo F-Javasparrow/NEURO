@@ -1,19 +1,13 @@
 #include "script_component.hpp"
 
 // --- parse medications
-EGVAR(meidical,medicationTypeCache) = createHashMap;
-EGVAR(meidical,medicationDetails) = createHashMap;
-
 private _medicationConfig = configFile >> "Neuro_Medical_Treatments";
 
 {
     private _entry = _x;
     private _className = configName _entry;
 
-    if (_className isEqualTo "treatmentHandlers") then {continue};
-
     EGVAR(meidical,medicationTypeCache) set [_className, _className];
-    EGVAR(meidical,medicationDetails) set [_className, _className];
 
     // -------------------------------------------------------------------------------- //
 
@@ -32,16 +26,6 @@ private _medicationConfig = configFile >> "Neuro_Medical_Treatments";
     _data set ["changeRR", GET_ARRAY(_entry >> "details" >> "changeRR",[ARR_4(0,0,0,0)])];
     _data set ["changeSpO2", GET_ARRAY(_entry >> "details" >> "changeSpO2",[ARR_2(0,0)])];
     _data set ["changeViscosity", GET_ARRAY(_entry >> "details" >> "changeViscosity",[ARR_2(0,0)])];
-
-    _data set ["selfReduce", GET_NUMBER(_entry >> "details" >> "selfReduce",0)];
-
-    // -------------------------------------------------------------------------------- //
-
-    private _medicationHandlers = [];
-    if (isClass(_entry >> "medicationHandlers")) then {
-        _medicationHandlers = [_entry >> "medicationHandlers"] call EFUNC(medical_engine,parseHandlersCfg);
-        reverse _medicationHandlers;
-    };
 
     // -------------------------------------------------------------------------------- //
 
@@ -79,6 +63,6 @@ private _medicationConfig = configFile >> "Neuro_Medical_Treatments";
 
     // -------------------------------------------------------------------------------- //
 
-    EGVAR(meidical,medicationDetails) set [_className, [_displayName, _displayDesc, _selections, _timeInSystem, _efficiency, _causeSymptom, _reduceSymptom, _data, _medicationHandlers]];
+    EGVAR(meidical,medicationDetails) set [_className, [_displayName, _displayDesc, _selections, _timeInSystem, _efficiency, _causeSymptom, _reduceSymptom, _data]];
 
 } forEach configProperties [_medicationConfig, "isClass _x"];

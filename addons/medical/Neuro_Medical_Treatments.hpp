@@ -1,7 +1,4 @@
 class Neuro_Medical_Treatments {
-	class medicationHandlers {
-		ADDON = QFUNC(medicationHandlerBase);
-	};
 
 	class MedicationBase {
 		displayName = "默认药物";
@@ -18,7 +15,6 @@ class Neuro_Medical_Treatments {
 		};
 		class causeSymptom {};
 		class reduceSymptom {};
-		class symptomHandlers: treatmentHandlers {};
 	};
 
 	class Dopamine: MedicationBase {
@@ -85,7 +81,7 @@ class Neuro_Medical_Treatments {
 		class causeSymptom {};
 		class reduceSymptom {};
 	};
-	class lidocaine: MedicationBase {
+	class Lidocaine: MedicationBase {
 		displayName = "利多卡因";
 		displayDesc = "利多卡因描述";
 		selections[] = {"torso", "ventral", "leftarm", "rightarm", "leftleg", "rightleg"};

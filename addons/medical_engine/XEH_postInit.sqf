@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+EGVAR(meidical,symptomTypeCache) = createHashMap;
+EGVAR(meidical,symptomsDetails) = createHashMap;
 call FUNC(parseConfigForSymptoms);
 addMissionEventHandler ["Loaded",{
     call FUNC(parseConfigForSymptoms);
@@ -25,9 +27,3 @@ addMissionEventHandler ["Loaded",{
     [QEGVAR(medical,handleSymptom), [_unit], _unit] call CBA_fnc_targetEvent;
     [QEGVAR(medical,handleMedicalStatus), [_unit], _unit] call CBA_fnc_targetEvent;
 }, nil, [], true] call CBA_fnc_addClassEventHandler;
-
-/* 
-[QEGVAR(medical,woundReceived), {
-    systemChat str _this;
-}] call CBA_fnc_addEventHandler;
-*/

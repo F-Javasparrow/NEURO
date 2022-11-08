@@ -1,4 +1,4 @@
 #include "script_component.hpp"
-params ["_unit", "_hitPart", "_severity"];
+params ["_unit", "_medicationClass", "_hitPart", "_severity"];
 
-"continue";
+[_unit, _medicationClass, _hitPart, _severity];

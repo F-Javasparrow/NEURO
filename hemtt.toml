@@ -3,7 +3,7 @@ prefix = "neuro"
 author = "Kal'tsitly"
 
 sig_version = 3
-version = "0.1.6"
+version = "0.1.7"
 reuse_private_key = false
 files = [
     "mod.cpp",

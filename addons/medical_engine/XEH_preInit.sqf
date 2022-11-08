@@ -21,7 +21,9 @@ GVAR(hitPartCache) = createHashMapFromArray [
 EGVAR(meidical,woundOfDamage) = createHashMap;
 
 [QEGVAR(medical,woundReceived), LINKFUNC(woundReceived)] call CBA_fnc_addEventHandler;
+
 [QEGVAR(medical,addSymptom), LINKFUNC(addSymptom)] call CBA_fnc_addEventHandler;
+[QEGVAR(medical,addMedication), LINKFUNC(addMedication)] call CBA_fnc_addEventHandler;
 
 [QEGVAR(medical,handleSymptom), LINKFUNC(handleSymptom)] call CBA_fnc_addEventHandler;
 [QEGVAR(medical,handleMedicalStatus), LINKFUNC(handleMedicalStatus)] call CBA_fnc_addEventHandler;

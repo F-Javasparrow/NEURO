@@ -13,6 +13,8 @@ EGVAR(meidical,symptomsDetails) get _symptomClass params [
 
 if(_symptomIndex != -1) then {
 	private _oldSeverity = _symptomInfo # _symptomIndex # 2;
+	if(isNil "_oldEfficiency") then {_oldEfficiency = 0};
+	
 	if((toLower _type) isEqualTo "set") then {_severity = 0 max (_severity) min _maxSeverity};
 	if((toLower _type) isEqualTo "add") then {_severity = 0 max (_severity + _oldSeverity) min _maxSeverity};
 

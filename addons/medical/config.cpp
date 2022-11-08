@@ -4,7 +4,14 @@ class CfgPatches {
     class ADDON {
         name = COMPONENT_NAME;
         units[] = {};
-        weapons[] = {};
+        weapons[] = {
+            "Neuro_Dopamine",
+            "Neuro_Epinephrine",
+            "Neuro_Norepinephrine",
+            "Neuro_Nikethamide",
+            "Neuro_Lidocaine",
+            "Neuro_Morphine"
+        };
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {
             "cba_main"
@@ -16,6 +23,8 @@ class CfgPatches {
 };
 
 #include "CfgEventHandlers.hpp"
+#include "CfgWeapons.hpp"
+#include "Neuro_Medical_Treatment_Action.hpp"
 #include "Neuro_Medical_Treatments.hpp"
 
 #include "..\medical_engine\Neuro_Medical_Symptoms.hpp"

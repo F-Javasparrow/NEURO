@@ -8,8 +8,8 @@ if (!local _unit) then {
     ["handleMedicalState", [_unit], _unit] call CBA_fnc_targetEvent;
 };
 
-// private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
-private _deltaT = 1;
+private _deltaT = GVAR(MedicalStatus_PFH_DeltaT);
+_deltaT = 1;
 
 [{
 	params ["_args", "_idPFH"];
@@ -63,6 +63,7 @@ private _deltaT = 1;
 	};
 
 	[_unit] call FUNC(TriggerSymptom);
+	[_unit] call FUNC(updatingMedicLevel);
 
 	SETHR(_unit,_unitHR);
 	SETRR(_unit,[ARR_2(_unitRR_Low,_unitRR_High)]);

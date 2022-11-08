@@ -1,9 +1,6 @@
 #include "script_component.hpp"
 
 // --- parse Symptoms
-EGVAR(meidical,symptomTypeCache) = createHashMap;
-EGVAR(meidical,symptomsDetails) = createHashMap;
-
 private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
 
 {
@@ -13,7 +10,6 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
     if (_className isEqualTo "symptomHandlers") then {continue};
 
     EGVAR(meidical,symptomTypeCache) set [_className, _className];
-    EGVAR(meidical,symptomsDetails) set [_className, _className];
 
     // -------------------------------------------------------------------------------- //
     private _displayName = GET_STRING(_entry >> "displayName","NullName");
@@ -59,7 +55,7 @@ private _symptomConfig = configFile >> "Neuro_Medical_Symptoms";
 
             _symptom = configName _subentry;
             _addPart = GET_STRING(_subentry >> "addPart","_SAME_");
-            _type = GET_STRING(_subentry >> "type","add");
+            _type = GET_STRING(_subentry >> "addType","add");
             _severityThreshold = GET_NUMBER(_subentry >> "severityThreshold",0);
             _perAdd = GET_NUMBER(_subentry >> "perAdd",0);
             _repeat = GET_NUMBER(_subentry >> "repeat",0);

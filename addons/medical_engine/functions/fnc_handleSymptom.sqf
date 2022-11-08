@@ -25,7 +25,7 @@ if (!local _unit) then {
 
 		if(isNil "_x") then {_symptomInfo = _symptomInfo deleteAt _symptomIndex;continue};
 		if!(_symptomClass in EGVAR(meidical,TypeCache)) then {continue};
-
+		
 		EGVAR(meidical,symptomsDetails) get _symptomClass params [
 			"", "",
 			"_selections",
@@ -48,11 +48,24 @@ if (!local _unit) then {
 
 		// 心率 & 血压 & 血氧
 		private _targetHR = _data get "targetHR";
-		private _tragetRR = _data get "tragetRR";
-		private _tragetSpo2 = _data get "tragetSpO2";
-		[_unit, _targetHR] call FUNC(updatingHR);
-		[_unit, _tragetRR] call FUNC(updatingRR);
-		[_unit, _tragetSpo2] call FUNC(updatingSpo2);
+		private _changeHR = _data get "changeHR";
+		_targetHR = (_targetHR # 1 - _targetHR # 0) * _severity + _targetHR # 0;
+		_changeHR = (_changeHR # 1 - _changeHR # 0) * _severity + _changeHR # 0;
+		[_unit, _targetHR, _changeHR] call FUNC(updatingHR);
+
+		private _targetRR = _data get "targetRR";
+		private _changeRR = _data get "changeRR";
+		private _targetRR_Low  = (_targetRR # 1 - _targetRR # 0) * _severity + _targetRR # 0;
+		private _targetRR_High = (_targetRR # 3 - _targetRR # 2) * _severity + _targetRR # 2;
+		private _changeRR_Low  = (_changeRR # 1 - _changeRR # 0) * _severity + _changeRR # 0;
+		private _changeRR_High = (_changeRR # 3 - _changeRR # 2) * _severity + _changeRR # 2;
+		[_unit, [_targetRR_Low, _targetRR_High], [_changeRR_Low, _changeRR_High]] call FUNC(updatingRR);
+
+		private _targetSpo2 = _data get "targetSpO2";
+		private _changeSpo2 = _data get "changeSpO2";
+		_targetSpo2 = (_targetSpo2 # 1 - _changeSpo2 # 0) * _severity + _changeSpo2 # 0;
+		_changeSpo2 = (_changeSpo2 # 1 - _changeSpo2 # 0) * _severity + _changeSpo2 # 0;
+		[_unit, _targetSpo2, _changeSpo2] call FUNC(updatingSpo2);
 
 		// 血液流失(可选)
 		if("Bloodloss" in _data) then {
@@ -108,9 +121,12 @@ if (!local _unit) then {
 		{
 			private _returnValue = _symptomData call _x;
 
-			if (toLower(_returnValue) isEqualType "exit") then {
-				break;
+			if ((typeName _returnValue) isEqualTo "STRING" ) then {
+				if((toLower _returnValue) isEqualType "exit") then {break};
 			} else {
+				reverse _returnValue;
+				_returnValue resize 3;
+				reverse _returnValue;
 				_symptomInfo set [_symptomIndex, _returnValue];
 			};
 		} forEach _symptomHandlers;
@@ -125,7 +141,7 @@ if (!local _unit) then {
 		_x params ["_medicationClass", "_mainPart", "_severity", "_causeSymptom", "_reduceSymptom"];
 		private _medicationIndex = _forEachIndex;
 
-		if(isNil "_x") then {_medicationInfo = _medicationInfo deleteAt _medicationIndex;continue};
+		if(isNil "_x" || _severity <= 0) then {_medicationInfo = _medicationInfo deleteAt _medicationIndex;continue};
 		if!(_medicationClass in EGVAR(meidical,medicationTypeCache)) then {continue};
 
 		EGVAR(meidical,medicationDetails) get _medicationClass params [
@@ -217,21 +233,8 @@ if (!local _unit) then {
 		}forEach _reduceSymptom;
 		_x set [4, _reduceSymptom];
 
-		// 症状独立函数
-		private _medicationData = [_unit, _medicationClass, _mainPart, _severity];
-		{
-			private _returnValue = _medicationData call _x;
-
-			if (toLower(_returnValue) isEqualType "exit") then {
-				break;
-			} else {
-				_medicationInfo set [_medicationIndex, _returnValue];
-			};
-		} forEach _medicationHandlers;
-
 		// 药效减少
-		private _selfReduce = _data get "selfReduce";
-		_x set [2, 0 max (_severity - _selfReduce) min 100];
+		_x set [2, 0 max (_severity - (1 / (_timeInSystem # 0 + _timeInSystem # 1))) min 1];
 
 	}forEach _medicationInfo;
 
